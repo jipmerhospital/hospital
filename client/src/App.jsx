@@ -35,7 +35,7 @@
 
 import React from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
-import './app.css'
+import './App.css'
 
 function useAuth() {
   const token = localStorage.getItem('token')
