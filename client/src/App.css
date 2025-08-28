@@ -1,0 +1,89 @@
+/* General Layout */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f9f9f9;
+}
+
+/* Top Navbar */
+.topbar {
+  background: #004080;
+  color: white;
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.topbar .hospital-name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.topbar .hospital-info {
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+}
+
+/* Sidebar + Main Layout */
+.layout {
+  display: flex;
+  flex: 1;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background: #f1f5f9;
+  border-right: 1px solid #ddd;
+  padding: 20px;
+}
+
+.sidebar h3 {
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #004080;
+}
+
+.sidebar nav {
+  display: grid;
+  gap: 12px;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: #333;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+
+.sidebar a:hover {
+  background: #dbeafe;
+  color: #004080;
+}
+
+.logout-btn {
+  background: #d32f2f;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.logout-btn:hover {
+  background: #b71c1c;
+}
+
+/* Main Content */
+.content {
+  flex: 1;
+  padding: 24px;
+  background: white;
+}
