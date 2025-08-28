@@ -1,6 +1,6 @@
 import React from 'react'
 import api from '../api'
-import './patientForm.css'
+import './PatientForm.css'
 
 const required = [
   'name', 'age', 'sex', 'fatherOrHusbandName', 'department',
