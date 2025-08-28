@@ -283,7 +283,12 @@ export default function PatientForm() {
         <input value={form.fatherOrHusbandName} onChange={e => setField('fatherOrHusbandName', e.target.value)} />
 
         <label>Department</label>
-        <input value={form.department} onChange={e => setField('department', e.target.value)} />
+        <select value={form.department} onChange={e => setField('department', e.target.value)}>
+          <option value="Medicine">Medicine</option>
+          <option value="Orthopedics">Orthopedics</option>
+          <option value="Surgery">Surgery</option>
+          <option value="OBG">OBG</option>
+        </select>
 
         <label>Address</label>
         <input value={form.addressLine} onChange={e => setField('addressLine', e.target.value)} />
