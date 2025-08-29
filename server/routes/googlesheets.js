@@ -57,6 +57,7 @@ export async function addPatientRow(patient) {
         patient.maritalStatus,
         patient.occupation,
         patient.income,
+        patient.nearestPoliceStation || "",  // ✅ Added police station
         patient.vitals?.bp || "",
         patient.vitals?.pulse || "",
         patient.vitals?.spo2 || "",
@@ -65,6 +66,7 @@ export async function addPatientRow(patient) {
         patient.vitals?.resp || "",
         patient.vitals?.temp || "",
         patient.vitals?.bmi || "",
+        
         new Date().toLocaleString(),
       ]],
     },
@@ -86,7 +88,7 @@ export async function updatePatientRow(patient) {
     return addPatientRow(patient);
   }
 
-  const updateRange = `Sheet1!A${rowIndex + 1}:W${rowIndex + 1}`;
+  const updateRange = `Sheet1!A${rowIndex + 1}:X${rowIndex + 1}`; // ✅ extended one column
   await sheets.spreadsheets.values.update({
     spreadsheetId: SPREADSHEET_ID,
     range: updateRange,
@@ -107,6 +109,7 @@ export async function updatePatientRow(patient) {
         patient.maritalStatus,
         patient.occupation,
         patient.income,
+        patient.nearestPoliceStation || "",  // ✅ Added police station
         patient.vitals?.bp || "",
         patient.vitals?.pulse || "",
         patient.vitals?.spo2 || "",
@@ -115,6 +118,7 @@ export async function updatePatientRow(patient) {
         patient.vitals?.resp || "",
         patient.vitals?.temp || "",
         patient.vitals?.bmi || "",
+        
         new Date().toLocaleString(),
       ]],
     },

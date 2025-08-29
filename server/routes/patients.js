@@ -39,11 +39,14 @@ async function getNextHospitalNo() {
 //   }
 // });
 
-// Create patient (clerk)
 router.post('/', auth, async (req, res) => {
   try {
     const data = req.body;
-    const required = ['name','age','sex','fatherOrHusbandName','department','addressLine','state','mandalam','phoneNumber','aadhar','maritalStatus','occupation','income'];
+    const required = [
+      'name','age','sex','fatherOrHusbandName','department','addressLine',
+      'state','mandalam','phoneNumber','aadhar','maritalStatus','occupation',
+      'income','nearestPoliceStation'
+    ];
     for (const f of required) {
       if (!data[f]) return res.status(400).json({ message: `Missing field: ${f}` });
     }
@@ -59,6 +62,7 @@ router.post('/', auth, async (req, res) => {
     res.status(400).json({ message: e.message });
   }
 });
+
 
 // List + filter + pagination
 router.get('/', auth, async (req, res) => {

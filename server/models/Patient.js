@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 
 const vitalsSchema = new mongoose.Schema({
-  bp: String,
-  pulse: String,
-  spo2: String,
   heightCm: String,
   weightKg: String,
+  bp: String,
+  pulse: String,
   resp: String,
   temp: String,
+  spo2: String,
   bmi: String,
 }, { _id: false });
 
@@ -26,6 +26,7 @@ const patientSchema = new mongoose.Schema({
   maritalStatus: { type: String, enum: ['YES','NO','OTHER'], required: true },
   occupation: { type: String, required: true },
   income: { type: Number, required: true },
+  nearestPoliceStation: { type: String, required: true }, // ✅ Added field
   vitals: vitalsSchema,
   registeredAt: { type: Date, default: Date.now },
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
