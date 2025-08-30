@@ -8,7 +8,7 @@ import { addPatientRow, updatePatientRow } from "./googlesheets.js";
 const router = Router();
 
 function formatHospitalNo(seq) {
-  return 'YA' + String(seq).padStart(5, '0'); // YA00001
+  return 'JY' + String(seq).padStart(5, '0'); // JY00001
 }
 
 async function getNextHospitalNo() {
