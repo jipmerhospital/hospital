@@ -1,0 +1,359 @@
+/* PatientsList.css */
+
+/* Container */
+.patients-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+/* Page Title */
+.page-title {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Search and Filters */
+.search-filters {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.search-input,
+.filter-input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  min-width: 200px;
+}
+
+.search-input:focus,
+.filter-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Table Container */
+.table-container {
+  overflow-x: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+/* Table */
+.patients-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.table-header {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.table-header th {
+  padding: 12px 8px;
+  text-align: left;
+  font-weight: bold;
+  color: #495057;
+  font-size: 14px;
+}
+
+.table-row {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.table-row:hover {
+  background-color: #f8f9fa;
+}
+
+.table-row td {
+  padding: 10px 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Table Cells */
+.cell-hospital-no {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.cell-name {
+  font-weight: 500;
+}
+
+.cell-age-sex,
+.cell-phone,
+.cell-state,
+.cell-department {
+  color: #666;
+}
+
+.cell-actions {
+  white-space: nowrap;
+}
+
+/* Buttons */
+.btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  margin-right: 5px;
+  transition: background-color 0.2s;
+}
+
+.btn-print {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-print:hover {
+  background-color: #218838;
+}
+
+.btn-edit {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.btn-edit:hover {
+  background-color: #e0a800;
+}
+
+.btn-save {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-save:hover {
+  background-color: #0056b3;
+}
+
+.btn-cancel {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-cancel:hover {
+  background-color: #545b62;
+}
+
+.btn-pagination {
+  background-color: #f8f9fa;
+  color: #007bff;
+  border: 1px solid #dee2e6;
+}
+
+.btn-pagination:hover:not(:disabled) {
+  background-color: #e9ecef;
+}
+
+.btn-pagination:disabled {
+  color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Table Info */
+.table-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.total-count {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.page-info {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.modal-title {
+  margin: 0 0 20px 0;
+  color: #333;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Form */
+.form-container {
+  margin-bottom: 25px;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form-row > div {
+  flex: 1;
+}
+
+.form-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #333;
+  font-size: 14px;
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.form-input:focus,
+.form-select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+/* Mandalam Section */
+.mandalam-container {
+  flex: 1;
+}
+
+.mandalam-other {
+  margin-top: 10px;
+}
+
+/* Section Divider */
+.section-divider {
+  height: 1px;
+  background-color: #dee2e6;
+  margin: 20px 0;
+}
+
+/* Vitals Section */
+.vitals-section {
+  margin-top: 20px;
+}
+
+.vitals-title {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.vitals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+}
+
+.vitals-input {
+  width: 100%;
+}
+
+/* Modal Actions */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 20px;
+  border-top: 1px solid #dee2e6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .patients-container {
+    padding: 15px;
+  }
+  
+  .search-filters {
+    flex-direction: column;
+  }
+  
+  .search-input,
+  .filter-input {
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .form-row {
+    flex-direction: column;
+  }
+  
+  .vitals-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+  }
+  
+  .modal-content {
+    padding: 20px;
+    width: 95%;
+  }
+  
+  .modal-actions {
+    flex-direction: column;
+  }
+  
+  .pagination {
+    flex-wrap: wrap;
+  }
+}

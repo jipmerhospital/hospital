@@ -1,6 +1,7 @@
 import React from 'react'
 import api from '../api'
 import { Link } from 'react-router-dom'
+import './PatientsList.css' // Import the CSS file
 
 export default function PatientsList() {
   const [items, setItems] = React.useState([])
@@ -21,6 +22,7 @@ export default function PatientsList() {
   }
   React.useEffect(load, [q, state, page])
 
+// ...existing code...
   const printRecord = (p) => {
     const w = window.open('', '_blank');
     if (!w) return;
@@ -31,105 +33,106 @@ export default function PatientsList() {
       <head>
         <title>Patient Record - ${safe(p.name)}</title>
         <style>
-          @page { size: A4; margin: 12mm; }
-          body { 
-            font-family: Arial, sans-serif; 
-            margin: 0; 
-            padding: 12px; 
-            font-size: 10px; 
-            line-height: 1.2; 
-          }
-          .header { 
-            text-align: center; 
-            font-size: 13px; 
-            font-weight: bold; 
-            text-transform: uppercase; 
-            margin-bottom: 12px; 
-            border: 1px solid #000; 
-            padding: 6px; 
-            background: #f0f0f0; 
-          }
-          .hospital-info { 
-            text-align: center; 
-            margin-bottom: 10px; 
-            font-size: 11px; 
-          }
-          .form-table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            border: 1px solid #000; 
-            margin-bottom: 10px; 
-            max-width: 95%; 
-            margin-left: auto; 
-            margin-right: auto;
-          }
-          .form-table td { 
-            border: 1px solid #000; 
-            padding: 4px 3px; 
-            vertical-align: middle; 
-          }
-          .label-cell { 
-            font-weight: bold; 
-            background-color: #f5f5f5; 
-            width: 15%; 
-            font-size: 9px; 
-          }
-          .value-cell { 
-            width: 35%; 
-            min-height: 14px; 
-            font-size: 9.5px;
-          }
-          .section-header { 
-            background-color: #d0d0d0; 
-            font-weight: bold; 
-            text-align: center; 
-            text-transform: uppercase; 
-            font-size: 10px; 
-            padding: 6px; 
-          }
-          .vitals-table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            border: 1px solid #000; 
-            margin-bottom: 10px; 
-            max-width: 95%; 
-            margin-left: auto; 
-            margin-right: auto;
-          }
-          .vitals-table td { 
-            border: 1px solid #000; 
-            padding: 4px 3px; 
-            text-align: center; 
-            width: 12.5%; 
-            font-size: 8.5px; 
-          }
-          .vitals-label { 
-            background-color: #f5f5f5; 
-            font-weight: bold; 
-          }
-          .signature-section { 
-            margin-top: 20px; 
-            display: flex; 
-            justify-content: space-between; 
-          }
-          .signature-box { 
-            width: 150px; 
-            border-bottom: 1px solid #000; 
-            text-align: center; 
-            padding-top: 25px; 
-            font-size: 9px; 
-          }
-          .date-time { 
-            margin-top: 8px; 
-            text-align: right; 
-            font-size: 9px; 
-            color: #666; 
-          }
+        @page { size: A4; margin: 12mm; }
+        body { 
+          font-family: Arial, sans-serif; 
+          margin: 0; 
+          padding: 16px; 
+          font-size: 13px; 
+          line-height: 1.35; 
+        }
+        .header { 
+          text-align: center; 
+          font-size: 18px; 
+          font-weight: bold; 
+          text-transform: uppercase; 
+          margin-bottom: 16px; 
+          border: 1px solid #000; 
+          padding: 10px; 
+          background: #f0f0f0; 
+        }
+        .hospital-info { 
+          text-align: center; 
+          margin-bottom: 14px; 
+          font-size: 15px; 
+        }
+        .form-table { 
+          width: 100%; 
+          border-collapse: collapse; 
+          border: 1px solid #000; 
+          margin-bottom: 14px; 
+          max-width: 98%; 
+          margin-left: auto; 
+          margin-right: auto;
+        }
+        .form-table td { 
+          border: 1px solid #000; 
+          padding: 4px 4px; /* Reduced padding for less row height */
+          vertical-align: middle; 
+        }
+        .label-cell { 
+          font-weight: bold; 
+          background-color: #f5f5f5; 
+          width: 15%; 
+          font-size: 13px; 
+        }
+        .value-cell { 
+          width: 35%; 
+          min-height: 18px; 
+          font-size: 14px;
+        }
+        .section-header { 
+          background-color: #d0d0d0; 
+          font-weight: bold; 
+          text-align: center; 
+          text-transform: uppercase; 
+          font-size: 14px; 
+          padding: 8px; /* Slightly reduced */
+        }
+        .vitals-table { 
+          width: 100%; 
+          border-collapse: collapse; 
+          border: 1px solid #000; 
+          margin-bottom: 14px; 
+          max-width: 98%; 
+          margin-left: auto; 
+          margin-right: auto;
+        }
+        .vitals-table td { 
+          border: 1px solid #000; 
+          padding: 4px 4px; 
+          text-align: center; 
+          width: 12.5%; 
+          font-size: 12px; 
+          height: 32px; 
+        }
+        .vitals-label { 
+          background-color: #f5f5f5; 
+          font-weight: bold; 
+        }
+        .signature-section { 
+          margin-top: 24px; 
+          display: flex; 
+          justify-content: space-between; 
+        }
+        .signature-box { 
+          width: 180px; 
+          border-bottom: 1px solid #000; 
+          text-align: center; 
+          padding-top: 30px; 
+          font-size: 13px; 
+        }
+        .date-time { 
+          margin-top: 10px; 
+          text-align: right; 
+          font-size: 12px; 
+          color: #666; 
+        }
         </style>
       </head>
       <body>
         <div class="hospital-info">
-          <div style="font-size:18px; font-weight:bold;">JIPMER Multi Speciality Consulting Unit</div>
+          <div style="font-size:22px; font-weight:bold;">JIPMER Multi Speciality Consulting Unit</div>
           <div>YANAM - 533464</div>
           <div>Phone: 08842323246 | Email: yanammscu@jipmer.ac.in</div>
         </div>
@@ -145,7 +148,7 @@ export default function PatientsList() {
             <td class="label-cell">Reg. No:</td>
             <td class="value-cell">${safe(p.hospitalNo)}</td>
             <td class="label-cell">Date:</td>
-            <td class="value-cell">${p.createdAt ? new Date(p.createdAt).toLocaleDateString('en-GB') : ''}</td>
+            <td class="value-cell">${p.createdAt ? new Date(p.createdAt).toLocaleDateString('en-GB') : new Date().toLocaleDateString('en-GB')}</td>
           </tr>
           <tr>
             <td class="label-cell">Patient Name:</td>
@@ -171,7 +174,7 @@ export default function PatientsList() {
             <td class="label-cell">State:</td>
             <td class="value-cell">${safe(p.state)}</td>
             <td class="label-cell">Mandalam:</td>
-            <td class="value-cell">${safe(p.mandalam)}</td>
+            <td class="value-cell">${safe(p.mandalam)}${p.mandalam === "OTHERS" && p.mandalamOther ? " (" + safe(p.mandalamOther) + ")" : ""}</td>
           </tr>
           <tr>
             <td class="label-cell">Phone No:</td>
@@ -226,7 +229,7 @@ export default function PatientsList() {
     w.document.close();
     w.print();
   };
-
+// ...existing
 
   // Start editing
   const startEdit = (p) => {
@@ -235,9 +238,28 @@ export default function PatientsList() {
       name: p.name || '',
       age: p.age || '',
       sex: p.sex || '',
-      phoneNumber: p.phoneNumber || '',
+      fatherOrHusbandName: p.fatherOrHusbandName || '',
+      department: p.department || '',
+      addressLine: p.addressLine || '',
       state: p.state || '',
-      department: p.department || ''
+      mandalam: p.mandalam || '',
+      mandalamOther: p.mandalamOther || '',
+      phoneNumber: p.phoneNumber || '',
+      aadhar: p.aadhar || '',
+      maritalStatus: p.maritalStatus || '',
+      occupation: p.occupation || '',
+      income: p.income || '',
+      nearestPoliceStation: p.nearestPoliceStation || '',
+      vitals: {
+        heightCm: p.vitals?.heightCm || '',
+        weightKg: p.vitals?.weightKg || '',
+        bp: p.vitals?.bp || '',
+        pulse: p.vitals?.pulse || '',
+        resp: p.vitals?.resp || '',
+        temp: p.vitals?.temp || '',
+        spo2: p.vitals?.spo2 || '',
+        bmi: p.vitals?.bmi || ''
+      }
     })
   }
 
@@ -253,57 +275,351 @@ export default function PatientsList() {
   }
 
   return (
-    <div>
-      <h2>Patients</h2>
-      <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
-        <input placeholder="Search name/phone/aadhar/hospNo" value={q} onChange={e => { setPage(1); setQ(e.target.value) }} />
-        <input placeholder="Filter by state" value={state} onChange={e => { setPage(1); setState(e.target.value) }} />
+    <div className="patients-container">
+      <h2 className="page-title">Patients</h2>
+
+      <div className="search-filters">
+        <input
+          className="search-input"
+          placeholder="Search name/phone/aadhar/hospNo"
+          value={q}
+          onChange={e => { setPage(1); setQ(e.target.value) }}
+        />
+        <input
+          className="filter-input"
+          placeholder="Filter by state"
+          value={state}
+          onChange={e => { setPage(1); setState(e.target.value) }}
+        />
       </div>
-      <table border="1" cellPadding="6">
-        <thead><tr><th>Hospital No</th><th>Name</th><th>Age/Sex</th><th>Phone</th><th>State</th><th>Department</th><th>Actions</th></tr></thead>
-        <tbody>
-          {items.map(p => (
-            <tr key={p._id}>
-              <td>{p.hospitalNo}</td>
-              <td>{p.name}</td>
-              <td>{p.age}/{p.sex}</td>
-              <td>{p.phoneNumber}</td>
-              <td>{p.state}</td>
-              <td>{p.department}</td>
-              <td>
-                <button onClick={() => printRecord(p)}>Print</button>{' '}
-                <button onClick={() => startEdit(p)}>Edit</button>
-              </td>
+
+      <div className="table-container">
+        <table className="patients-table">
+          <thead>
+            <tr className="table-header">
+              <th>Hospital No</th>
+              <th>Name</th>
+              <th>Age/Sex</th>
+              <th>Phone</th>
+              <th>State</th>
+              <th>Department</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <div style={{ marginTop: 8 }}>Total: {total}</div>
-      <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
-        <button disabled={page <= 1} onClick={() => setPage(p => p - 1)}>Prev</button>
-        <div>Page {page} / {pages}</div>
-        <button disabled={page >= pages} onClick={() => setPage(p => p + 1)}>Next</button>
+          </thead>
+          <tbody>
+            {items.map(p => (
+              <tr key={p._id} className="table-row">
+                <td className="cell-hospital-no">{p.hospitalNo}</td>
+                <td className="cell-name">{p.name}</td>
+                <td className="cell-age-sex">{p.age}/{p.sex}</td>
+                <td className="cell-phone">{p.phoneNumber}</td>
+                <td className="cell-state">{p.state}</td>
+                <td className="cell-department">{p.department}</td>
+                <td className="cell-actions">
+                  <button className="btn btn-print" onClick={() => printRecord(p)}>Print</button>
+                  <button className="btn btn-edit" onClick={() => startEdit(p)}>Edit</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="table-info">
+        <span className="total-count">Total: {total}</span>
+      </div>
+
+      <div className="pagination">
+        <button
+          className="btn btn-pagination"
+          disabled={page <= 1}
+          onClick={() => setPage(p => p - 1)}
+        >
+          Prev
+        </button>
+        <div className="page-info">Page {page} / {pages}</div>
+        <button
+          className="btn btn-pagination"
+          disabled={page >= pages}
+          onClick={() => setPage(p => p + 1)}
+        >
+          Next
+        </button>
       </div>
 
       {/* Edit Modal */}
       {editing && (
-        <div style={{
-          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-          background: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center'
-        }}>
-          <div style={{ background: '#fff', padding: 20, borderRadius: 8, width: 400 }}>
-            <h3>Edit Patient</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <input placeholder="Name" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
-              <input placeholder="Age" value={form.age} onChange={e => setForm({ ...form, age: e.target.value })} />
-              <input placeholder="Sex" value={form.sex} onChange={e => setForm({ ...form, sex: e.target.value })} />
-              <input placeholder="Phone" value={form.phoneNumber} onChange={e => setForm({ ...form, phoneNumber: e.target.value })} />
-              <input placeholder="State" value={form.state} onChange={e => setForm({ ...form, state: e.target.value })} />
-              <input placeholder="Department" value={form.department} onChange={e => setForm({ ...form, department: e.target.value })} />
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3 className="modal-title">Edit Patient</h3>
+
+            <div className="form-container">
+              <div className="form-row">
+                <div style={{ flex: 1 }}>
+                  <label>Name</label>
+                  <input
+                    className="form-input"
+                    placeholder="Name"
+                    value={form.name}
+                    onChange={e => setForm({ ...form, name: e.target.value })}
+                  />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <label>Age</label>
+                  <input
+                    className="form-input"
+                    placeholder="Age"
+                    value={form.age}
+                    onChange={e => setForm({ ...form, age: e.target.value })}
+                  />
+                </div>
+                
+              </div>
+
+              <div className="form-row">
+                <div style={{ flex: 1 }}>
+                  <label>Sex</label>
+                  <select
+                    className="form-select"
+                    value={form.sex}
+                    onChange={e => setForm({ ...form, sex: e.target.value })}
+                  >
+                    <option value="F">Female</option>
+                    <option value="M">Male</option>
+                  </select>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <label>Department</label>
+                  <select
+                    className="form-select"
+                    value={form.department}
+                    onChange={e => setForm({ ...form, department: e.target.value })}
+                  >
+                    <option value="MEDICINE">MEDICINE</option>
+                    <option value="ORTHOPEDICS">ORTHOPEDICS</option>
+                    <option value="SURGERY">SURGERY</option>
+                    <option value="OBG">OBG</option>
+                    <option value="NEPHROLOGY">NEPHROLOGY</option>
+                  </select>
+                </div>
+              </div>
+
+              <label>Father / Husband Name</label>
+              <input
+                className="form-input full-width"
+                placeholder="Father / Husband Name"
+                value={form.fatherOrHusbandName || ''}
+                onChange={e => setForm({ ...form, fatherOrHusbandName: e.target.value })}
+              />
+
+              <label>Address</label>
+              <input
+                className="form-input full-width"
+                placeholder="Address"
+                value={form.addressLine || ''}
+                onChange={e => setForm({ ...form, addressLine: e.target.value })}
+              />
+
+              <div className="form-row">
+                <div style={{ flex: 1 }}>
+                  <label>State</label>
+                  <select
+                    className="form-select"
+                    value={form.state}
+                    onChange={e => setForm({ ...form, state: e.target.value })}
+                  >
+                    <option value="">Select State</option>
+          <option value="PUDUCHERRY">PUDUCHERRY</option>
+          <option value="ANDHRA PRADESH">ANDHRA PRADESH</option>
+          <option value="KARNATAKA">KARNATAKA</option>
+          <option value="KERALA">KERALA</option>
+          <option value="TELANGANA">TELANGANA</option>
+          <option value="TAMIL NADU">TAMIL NADU</option>
+          <option value="DELHI">DELHI</option>
+          <option value="UP">UP</option>
+          <option value="MP">MP</option>
+          <option value="MP">OTHER STATE</option>
+                  </select>
+                </div>
+                <div className="mandalam-container">
+                  <label>Mandalam</label>
+                  <select
+                    className="form-select"
+                    value={form.mandalam}
+                    onChange={e => setForm({ ...form, mandalam: e.target.value })}
+                  >
+                    <option value="">Select Mandalam</option>
+                    <option value="THALLAREVU">THALLAREVU</option>
+                    <option value="KAJULURU">KAJULURU</option>
+                    <option value="K.GANGAVARAM">K.GANGAVARAM</option>
+                    <option value="I.POLAVARAM">I.POLAVARAM</option>
+                    <option value="KATRENIKONA">KATRENIKONA</option>
+                    <option value="UPPAGUPTHAM">UPPAGUPTHAM</option>
+                    <option value="OTHERS">OTHERS</option>
+                  </select>
+                  {form.mandalam === "OTHERS" && (
+                    <>
+                      <label>Other Mandalam</label>
+                      <input
+                        className="form-input mandalam-other"
+                        placeholder="Enter Mandalam"
+                        value={form.mandalamOther || ""}
+                        onChange={e => setForm({ ...form, mandalamOther: e.target.value })}
+                      />
+                    </>
+                  )}
+                </div>
+              </div>
+
+              <div className="form-row">
+                <div style={{ flex: 1 }}>
+                  <label>Phone</label>
+                  <input
+                    className="form-input"
+                    placeholder="Phone"
+                    value={form.phoneNumber || ''}
+                    onChange={e => setForm({ ...form, phoneNumber: e.target.value })}
+                  />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <label>Aadhar</label>
+                  <input
+                    className="form-input"
+                    placeholder="Aadhar"
+                    value={form.aadhar || ''}
+                    onChange={e => setForm({ ...form, aadhar: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              <div className="form-row">
+                <div style={{ flex: 1 }}>
+                  <label>Marital Status</label>
+                  <select
+                    className="form-select"
+                    value={form.maritalStatus}
+                    onChange={e => setForm({ ...form, maritalStatus: e.target.value })}
+                  >
+                    <option value="YES">YES</option>
+                    <option value="NO">NO</option>
+                  </select>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <label>Occupation</label>
+                  <input
+                    className="form-input"
+                    placeholder="Occupation"
+                    value={form.occupation || ''}
+                    onChange={e => setForm({ ...form, occupation: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              <div className="form-row">
+                <div style={{ flex: 1 }}>
+                  <label>Income</label>
+                  <input
+                    className="form-input"
+                    placeholder="Income"
+                    value={form.income || ''}
+                    onChange={e => setForm({ ...form, income: e.target.value })}
+                  />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <label>Nearest Police Station</label>
+                  <input
+                    className="form-input"
+                    placeholder="Nearest Police Station"
+                    value={form.nearestPoliceStation || ''}
+                    onChange={e => setForm({ ...form, nearestPoliceStation: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              <div className="section-divider"></div>
+
+              <div className="vitals-section">
+                <h4 className="vitals-title">Vitals</h4>
+                <div className="vitals-grid">
+                  <div>
+                    <label>Height (cm)</label>
+                    <input
+                      className="form-input vitals-input"
+                      placeholder="Height (cm)"
+                      value={form.vitals?.heightCm || ''}
+                      onChange={e => setForm({ ...form, vitals: { ...form.vitals, heightCm: e.target.value } })}
+                    />
+                  </div>
+                  <div>
+                    <label>Weight (kg)</label>
+                    <input
+                      className="form-input vitals-input"
+                      placeholder="Weight (kg)"
+                      value={form.vitals?.weightKg || ''}
+                      onChange={e => setForm({ ...form, vitals: { ...form.vitals, weightKg: e.target.value } })}
+                    />
+                  </div>
+                  <div>
+                    <label>BP</label>
+                    <input
+                      className="form-input vitals-input"
+                      placeholder="BP"
+                      value={form.vitals?.bp || ''}
+                      onChange={e => setForm({ ...form, vitals: { ...form.vitals, bp: e.target.value } })}
+                    />
+                  </div>
+                  <div>
+                    <label>Pulse</label>
+                    <input
+                      className="form-input vitals-input"
+                      placeholder="Pulse"
+                      value={form.vitals?.pulse || ''}
+                      onChange={e => setForm({ ...form, vitals: { ...form.vitals, pulse: e.target.value } })}
+                    />
+                  </div>
+                  <div>
+                    <label>Resp</label>
+                    <input
+                      className="form-input vitals-input"
+                      placeholder="Resp"
+                      value={form.vitals?.resp || ''}
+                      onChange={e => setForm({ ...form, vitals: { ...form.vitals, resp: e.target.value } })}
+                    />
+                  </div>
+                  <div>
+                    <label>Temp</label>
+                    <input
+                      className="form-input vitals-input"
+                      placeholder="Temp"
+                      value={form.vitals?.temp || ''}
+                      onChange={e => setForm({ ...form, vitals: { ...form.vitals, temp: e.target.value } })}
+                    />
+                  </div>
+                  <div>
+                    <label>SPO2</label>
+                    <input
+                      className="form-input vitals-input"
+                      placeholder="SPO2"
+                      value={form.vitals?.spo2 || ''}
+                      onChange={e => setForm({ ...form, vitals: { ...form.vitals, spo2: e.target.value } })}
+                    />
+                  </div>
+                  <div>
+                    <label>BMI</label>
+                    <input
+                      className="form-input vitals-input"
+                      placeholder="BMI"
+                      value={form.vitals?.bmi || ''}
+                      onChange={e => setForm({ ...form, vitals: { ...form.vitals, bmi: e.target.value } })}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-            <div style={{ marginTop: 12, display: 'flex', gap: 8 }}>
-              <button onClick={saveEdit}>Save</button>
-              <button onClick={() => setEditing(null)}>Cancel</button>
+
+            <div className="modal-actions">
+              <button className="btn btn-save" onClick={saveEdit}>Save</button>
+              <button className="btn btn-cancel" onClick={() => setEditing(null)}>Cancel</button>
             </div>
           </div>
         </div>

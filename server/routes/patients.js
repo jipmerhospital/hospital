@@ -89,13 +89,14 @@ router.get('/', auth, async (req, res) => {
 
 router.get('/analytics/list', async (req, res) => {
   try {
-    console.log("heool")
     const { field, value, page = 1, limit = 20 } = req.query
     if (!field || !value) {
       return res.status(400).json({ error: 'field and value are required' })
     }
 
-    const query = { [field]: value }
+    // 🔹 Parse age to number if field is 'age'
+    const query = field === 'age' ? { age: parseInt(value) } : { [field]: value }
+
     const skip = (parseInt(page) - 1) * parseInt(limit)
 
     const patients = await Patient.find(query)
@@ -111,6 +112,7 @@ router.get('/analytics/list', async (req, res) => {
     res.status(500).json({ error: 'Server error' })
   }
 })
+
 
 
 
