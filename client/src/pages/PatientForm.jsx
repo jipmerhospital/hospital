@@ -24,24 +24,38 @@ export default function PatientForm() {
   const setField = (k, v) => setForm(p => ({ ...p, [k]: v }))
   const setVitals = (k, v) => setForm(p => ({ ...p, vitals: { ...p.vitals, [k]: v } }))
 
-  const submit = async (e) => {
-    e.preventDefault()
-    setError('')
-    for (const f of required) {
-      if (!form[f]) { setError('Missing: ' + f); return }
-    }
-    try {
-      const { data } = await api.post('/patients', {
-        ...form,
-        age: Number(form.age),
-        income: Number(form.income)
-      })
-      setSaved(data)
-      setForm(initialForm)
-    } catch (err) {
-      setError(err.response?.data?.message || 'Save failed')
-    }
+const nameRegex = /^[A-Za-z\s]+$/
+const phoneRegex = /^\d{10}$/
+const aadharRegex = /^\d{12}$/
+
+const validateInputs = () => {
+  if (!nameRegex.test(form.name)) return 'Name must contain only letters and spaces'
+  if (!nameRegex.test(form.fatherOrHusbandName)) return 'Father/Husband Name must contain only letters and spaces'
+  if (!phoneRegex.test(form.phoneNumber)) return 'Phone Number must be exactly 10 digits'
+  if (!aadharRegex.test(form.aadhar)) return 'Aadhar Number must be exactly 12 digits'
+  return ''
+}
+
+const submit = async (e) => {
+  e.preventDefault()
+  setError('')
+  for (const f of required) {
+    if (!form[f]) { setError('Missing: ' + f); return }
   }
+  const validationError = validateInputs()
+  if (validationError) { setError(validationError); return }
+  try {
+    const { data } = await api.post('/patients', {
+      ...form,
+      age: Number(form.age),
+      income: Number(form.income)
+    })
+    setSaved(data)
+    setForm(initialForm)
+  } catch (err) {
+    setError(err.response?.data?.message || 'Save failed')
+  }
+}
 
   const printForm = () => {
     const printWindow = window.open('', '_blank')
