@@ -41,7 +41,7 @@ export default function PatientForm() {
     if (!aadharRegex.test(form.aadhar)) return 'Aadhar Number must be exactly 12 digits'
     return ''
   }
-
+  // ...existing code...
   const submit = async (e) => {
     e.preventDefault()
     setError('')
@@ -50,9 +50,14 @@ export default function PatientForm() {
     }
     const validationError = validateInputs()
     if (validationError) { setError(validationError); return }
+
+    // Fix: Use mandalamOther if mandalam is "OTHERS"
+    let mandalamValue = form.mandalam === "OTHERS" ? (form.mandalamOther || "OTHERS") : form.mandalam;
+
     try {
       const { data } = await api.post('/patients', {
         ...form,
+        mandalam: mandalamValue,
         age: Number(form.age),
         income: Number(form.income)
       })
@@ -62,6 +67,7 @@ export default function PatientForm() {
       setError(err.response?.data?.message || 'Save failed')
     }
   }
+  // ...existing code...
 
   // ...existing code...
   const printForm = () => {
@@ -325,6 +331,9 @@ export default function PatientForm() {
             <option value="I.POLAVARAM">I.POLAVARAM</option>
             <option value="KATRENIKONA">KATRENIKONA</option>
             <option value="UPPAGUPTHAM">UPPAGUPTHAM</option>
+            <option value="YANAM">YANAM</option>
+            <option value="KAKINADA">KAKINADA</option>
+            <option value="MUMMIDIVARAM">MUMMIDIVARAM</option>
             <option value="OTHERS">OTHERS</option>
           </select>
           {form.mandalam === "OTHERS" && (

@@ -22,7 +22,7 @@ export default function PatientsList() {
   }
   React.useEffect(load, [q, state, page])
 
-// ...existing code...
+  // ...existing code...
   const printRecord = (p) => {
     const w = window.open('', '_blank');
     if (!w) return;
@@ -229,7 +229,7 @@ export default function PatientsList() {
     w.document.close();
     w.print();
   };
-// ...existing
+  // ...existing
 
   // Start editing
   const startEdit = (p) => {
@@ -264,15 +264,22 @@ export default function PatientsList() {
   }
 
   // Save update
+  // ...existing code...
   const saveEdit = async () => {
+    // Fix: Use mandalamOther if mandalam is "OTHERS"
+    let mandalamValue = form.mandalam === "OTHERS" ? (form.mandalamOther || "OTHERS") : form.mandalam;
     try {
-      await api.put(`/patients/${editing._id}`, form)
+      await api.put(`/patients/${editing._id}`, {
+        ...form,
+        mandalam: mandalamValue
+      })
       setEditing(null)
       load() // reload list
     } catch (e) {
       alert("Update failed: " + e.message)
     }
   }
+  // ...existing code...
 
   return (
     <div className="patients-container">
@@ -373,7 +380,7 @@ export default function PatientsList() {
                     onChange={e => setForm({ ...form, age: e.target.value })}
                   />
                 </div>
-                
+
               </div>
 
               <div className="form-row">
@@ -429,16 +436,16 @@ export default function PatientsList() {
                     onChange={e => setForm({ ...form, state: e.target.value })}
                   >
                     <option value="">Select State</option>
-          <option value="PUDUCHERRY">PUDUCHERRY</option>
-          <option value="ANDHRA PRADESH">ANDHRA PRADESH</option>
-          <option value="KARNATAKA">KARNATAKA</option>
-          <option value="KERALA">KERALA</option>
-          <option value="TELANGANA">TELANGANA</option>
-          <option value="TAMIL NADU">TAMIL NADU</option>
-          <option value="DELHI">DELHI</option>
-          <option value="UP">UP</option>
-          <option value="MP">MP</option>
-          <option value="MP">OTHER STATE</option>
+                    <option value="PUDUCHERRY">PUDUCHERRY</option>
+                    <option value="ANDHRA PRADESH">ANDHRA PRADESH</option>
+                    <option value="KARNATAKA">KARNATAKA</option>
+                    <option value="KERALA">KERALA</option>
+                    <option value="TELANGANA">TELANGANA</option>
+                    <option value="TAMIL NADU">TAMIL NADU</option>
+                    <option value="DELHI">DELHI</option>
+                    <option value="UP">UP</option>
+                    <option value="MP">MP</option>
+                    <option value="MP">OTHER STATE</option>
                   </select>
                 </div>
                 <div className="mandalam-container">
