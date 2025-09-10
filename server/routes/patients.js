@@ -89,13 +89,21 @@ router.get('/', auth, async (req, res) => {
 
 router.get('/analytics/list', async (req, res) => {
   try {
-    const { field, value, page = 1, limit = 20 } = req.query
+    const { field, value, page = 1, limit = 20, date } = req.query
     if (!field || !value) {
       return res.status(400).json({ error: 'field and value are required' })
     }
 
-    // 🔹 Parse age to number if field is 'age'
-    const query = field === 'age' ? { age: parseInt(value) } : { [field]: value }
+    let query = field === 'age' ? { age: parseInt(value) } : { [field]: value }
+
+    // 🔹 Add date filter if provided
+    if (date) {
+      const start = new Date(date)
+      start.setHours(0,0,0,0)
+      const end = new Date(date)
+      end.setHours(23,59,59,999)
+      query.createdAt = { $gte: start, $lte: end }
+    }
 
     const skip = (parseInt(page) - 1) * parseInt(limit)
 
@@ -117,27 +125,33 @@ router.get('/analytics/list', async (req, res) => {
 
 
 
+
 // Analytics: counts by any field (state, department, sex, etc.)
 router.get('/analytics/summary', auth, async (req, res) => {
-  const { field = 'state', value } = req.query; // default group by state
-  let match = {};
-  if (value) match[field] = value;
+  const { field = 'state', value, date } = req.query
+  let match = {}
+
+  if (value) match[field] = value
+
+  // 🔹 Add date filter
+  if (date) {
+    const start = new Date(date)
+    start.setHours(0,0,0,0)
+    const end = new Date(date)
+    end.setHours(23,59,59,999)
+    match.createdAt = { $gte: start, $lte: end }
+  }
+
   const pipeline = [
     { $match: match },
     { $group: { _id: `$${field}`, count: { $sum: 1 } } },
     { $sort: { count: -1 } }
-  ];
-  const summary = await Patient.aggregate(pipeline);
-  const total = await Patient.countDocuments(value ? { [field]: value } : {});
-  res.json({ field, total, summary });
-});
+  ]
+  const summary = await Patient.aggregate(pipeline)
+  const total = await Patient.countDocuments(match)
+  res.json({ field, total, summary })
+})
 
-// Get single
-router.get('/:id', auth, async (req, res) => {
-  const p = await Patient.findById(req.params.id);
-  if (!p) return res.status(404).json({ message: 'Not found' });
-  res.json(p);
-});
 
 // // Update
 // router.put('/:id', auth, async (req, res) => {

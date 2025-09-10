@@ -245,6 +245,7 @@ export default function PatientsList() {
       mandalam: p.mandalam || '',
       mandalamOther: p.mandalamOther || '',
       phoneNumber: p.phoneNumber || '',
+      stateOther: p.stateOther || '',
       aadhar: p.aadhar || '',
       maritalStatus: p.maritalStatus || '',
       occupation: p.occupation || '',
@@ -267,11 +268,13 @@ export default function PatientsList() {
   // ...existing code...
   const saveEdit = async () => {
     // Fix: Use mandalamOther if mandalam is "OTHERS"
-    let mandalamValue = form.mandalam === "OTHERS" ? (form.mandalamOther || "OTHERS") : form.mandalam;
+      let mandalamValue = form.mandalam === "OTHERS" ? (form.mandalamOther || "OTHERS") : form.mandalam;
+      let stateValue = form.state === "OTHER STATE" ? (form.stateOther || "OTHER STATE") : form.state;
     try {
       await api.put(`/patients/${editing._id}`, {
         ...form,
-        mandalam: mandalamValue
+        mandalam: mandalamValue,
+        state: stateValue
       })
       setEditing(null)
       load() // reload list
@@ -445,8 +448,20 @@ export default function PatientsList() {
                     <option value="DELHI">DELHI</option>
                     <option value="UP">UP</option>
                     <option value="MP">MP</option>
-                    <option value="MP">OTHER STATE</option>
+                    <option value="OTHER STATE">OTHER STATE</option>
                   </select>
+
+                  {form.state === "OTHER STATE" && (
+                    <>
+                      <label>Other State</label>
+                      <input
+                        className="form-input"
+                        placeholder="Enter State"
+                        value={form.stateOther || ""}
+                        onChange={e => setForm({ ...form, stateOther: e.target.value })}
+                      />
+                    </>
+                  )}
                 </div>
                 <div className="mandalam-container">
                   <label>Mandalam</label>

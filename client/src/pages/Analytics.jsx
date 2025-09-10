@@ -9,26 +9,32 @@ export default function Analytics() {
   const [page, setPage] = React.useState(1)
   const [pages, setPages] = React.useState(1)
   const [selected, setSelected] = React.useState(null)
+  const [date, setDate] = React.useState('');
+
 
   // For editing popup
   const [editing, setEditing] = React.useState(null)
   const [form, setForm] = React.useState({})
 
   const load = () => {
-    api.get('/patients/analytics/summary', { params: { field, value: value || undefined } })
-      .then(({ data }) => setData(data))
+    api.get('/patients/analytics/summary', {
+      params: { field, value: value || undefined, date: date || undefined }
+    }).then(({ data }) => setData(data))
   }
-  React.useEffect(load, [field, value])
+  React.useEffect(load, [field, value, date])
+
 
   const loadPatients = (f, v, p = 1) => {
-    api.get('/patients/analytics/list', { params: { field: f, value: v, page: p, limit: 20 } })
-      .then(({ data }) => {
-        setPatients(data.items)
-        setPage(p)
-        setPages(data.pages)
-        setSelected({ field: f, value: v })
-      })
+    api.get('/patients/analytics/list', {
+      params: { field: f, value: v, date: date || undefined, page: p, limit: 20 }
+    }).then(({ data }) => {
+      setPatients(data.items)
+      setPage(p)
+      setPages(data.pages)
+      setSelected({ field: f, value: v })
+    })
   }
+
 
   // ...existing code...
   const handlePrint = (p) => {
@@ -201,6 +207,16 @@ export default function Analytics() {
           />
         )}
       </div>
+      <div style={{ marginBottom: 8 }}>
+        <label>Select Date: </label>
+        <input
+          type="date"
+          value={date}
+          onChange={e => setDate(e.target.value)}
+        />
+        {date && <button onClick={() => setDate('')}>Clear</button>}
+      </div>
+
 
       <div>Total patients{value ? ` for ${field}=${value}` : ''}: <b>{data.total}</b></div>
       <ul>

@@ -11,9 +11,9 @@ const required = [
 export default function PatientForm() {
   const initialForm = {
     name: '', age: '', sex: 'F', fatherOrHusbandName: '',
-    department: 'OBG', addressLine: '', state: '', mandalam: '',
-    phoneNumber: '', aadhar: '', maritalStatus: 'YES', occupation: '', income: '',
-    nearestPoliceStation: '',
+    department: 'OBG', addressLine: '', state: '', stateOther: '',
+    mandalam: '', mandalamOther: '', phoneNumber: '', aadhar: '', maritalStatus: 'YES',
+    occupation: '', income: '', nearestPoliceStation: '',
     vitals: { heightCm: '', weightKg: '', bp: '', pulse: '', resp: '', temp: '', spo2: '', bmi: '' }
   }
 
@@ -41,7 +41,7 @@ export default function PatientForm() {
     if (!aadharRegex.test(form.aadhar)) return 'Aadhar Number must be exactly 12 digits'
     return ''
   }
-  // ...existing code...
+
   const submit = async (e) => {
     e.preventDefault()
     setError('')
@@ -51,12 +51,15 @@ export default function PatientForm() {
     const validationError = validateInputs()
     if (validationError) { setError(validationError); return }
 
+    // Fix: Use stateOther if state is "OTHER STATE"
+    let stateValue = form.state === "OTHER STATE" ? (form.stateOther || "OTHER STATE") : form.state;
     // Fix: Use mandalamOther if mandalam is "OTHERS"
     let mandalamValue = form.mandalam === "OTHERS" ? (form.mandalamOther || "OTHERS") : form.mandalam;
 
     try {
       const { data } = await api.post('/patients', {
         ...form,
+        state: stateValue,
         mandalam: mandalamValue,
         age: Number(form.age),
         income: Number(form.income)
@@ -285,15 +288,19 @@ export default function PatientForm() {
         {/* Existing Fields */}
         <label>Name</label>
         <input value={form.name} onChange={e => setField('name', e.target.value)} />
+
         <label>Age</label>
         <input value={form.age} onChange={e => setField('age', e.target.value)} />
+
         <label>Sex</label>
         <select value={form.sex} onChange={e => setField('sex', e.target.value)}>
           <option value="F">Female</option>
           <option value="M">Male</option>
         </select>
+
         <label>Father / Husband Name</label>
         <input value={form.fatherOrHusbandName} onChange={e => setField('fatherOrHusbandName', e.target.value)} />
+
         <label>Department</label>
         <select value={form.department} onChange={e => setField('department', e.target.value)}>
           <option value="MEDICINE">MEDICINE</option>
@@ -302,22 +309,38 @@ export default function PatientForm() {
           <option value="OBG">OBG</option>
           <option value="NEPHROLOGY">NEPHROLOGY</option>
         </select>
+
         <label>Address</label>
         <input value={form.addressLine} onChange={e => setField('addressLine', e.target.value)} />
+
         <label>State</label>
-        <select value={form.state} onChange={e => setField('state', e.target.value)}>
-          <option value="">Select State</option>
-          <option value="PUDUCHERRY">PUDUCHERRY</option>
-          <option value="ANDHRA PRADESH">ANDHRA PRADESH</option>
-          <option value="KARNATAKA">KARNATAKA</option>
-          <option value="KERALA">KERALA</option>
-          <option value="TELANGANA">TELANGANA</option>
-          <option value="TAMIL NADU">TAMIL NADU</option>
-          <option value="DELHI">DELHI</option>
-          <option value="UP">UP</option>
-          <option value="MP">MP</option>
-          <option value="MP">OTHER STATE</option>
-        </select>
+        <div className="state-field">
+          <select
+            value={form.state}
+            onChange={e => setField('state', e.target.value)}
+          >
+            <option value="">Select State</option>
+            <option value="PUDUCHERRY">PUDUCHERRY</option>
+            <option value="ANDHRA PRADESH">ANDHRA PRADESH</option>
+            <option value="KARNATAKA">KARNATAKA</option>
+            <option value="KERALA">KERALA</option>
+            <option value="TELANGANA">TELANGANA</option>
+            <option value="TAMIL NADU">TAMIL NADU</option>
+            <option value="DELHI">DELHI</option>
+            <option value="UP">UP</option>
+            <option value="MP">MP</option>
+            <option value="OTHER STATE">OTHER STATE</option>
+          </select>
+          {form.state === "OTHER STATE" && (
+            <input
+              className="state-other-input"
+              placeholder="Enter State"
+              value={form.stateOther || ""}
+              onChange={e => setField('stateOther', e.target.value)}
+            />
+          )}
+        </div>
+
         <label>Mandalam</label>
         <div className="mandalam-field">
           <select
