@@ -71,6 +71,8 @@ export default function App(){
             <Link to="/new">Add Patient</Link>
             <Link to="/patients">Patients</Link>
             <Link to="/analytics">Analytics</Link>
+            <Link to="/age-filter">Age Filter</Link>
+            <Link to="/inpatient-entry">In-Patient Entry</Link>
             <button onClick={logout} className="logout-btn">Logout</button>
           </nav>
         </aside>

@@ -1,0 +1,53 @@
+.inpatient-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  background: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.search-section {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.search-section input {
+  flex: 1;
+  padding: 0.5rem;
+}
+
+button {
+  background: #007bff;
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.patient-details {
+  margin-top: 1rem;
+}
+
+.patient-details p {
+  margin: 0.3rem 0;
+}
+
+form {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+input {
+  padding: 0.4rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.message {
+  color: red;
+  margin-top: 0.5rem;
+}

@@ -47,6 +47,7 @@ dotenv.config();
 import authRoutes from './routes/auth.js';
 import patientRoutes from './routes/patients.js';
 import { seedAdminIfNeeded } from './routes/auth.js';
+import inPatientRoutes from './routes/inPatientRoutes.js';
 
 const app = express();
 
@@ -71,6 +72,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/patients', patientRoutes);
+app.use('/api/inpatients', inPatientRoutes);
 
 const PORT = process.env.PORT || 4000;
 

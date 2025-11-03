@@ -7,6 +7,8 @@ import Dashboard from './pages/Dashboard.jsx'
 import PatientForm from './pages/PatientForm.jsx'
 import PatientsList from './pages/PatientsList.jsx'
 import Analytics from './pages/Analytics.jsx'
+import PatientsAge from './pages/AgeFilter.jsx'
+import InPatientEntry from './pages/InPatientEntry.jsx'
 
 const root = createRoot(document.getElementById('root'))
 root.render(
@@ -21,6 +23,8 @@ root.render(
         <Route path="new" element={<PatientForm />} />
         <Route path="patients" element={<PatientsList />} />
         <Route path="analytics" element={<Analytics />} />
+        <Route path="age-filter" element={<PatientsAge />} />
+        <Route path="inpatient-entry" element={<InPatientEntry />} />
       </Route>
 
       {/* Fallback route */}
