@@ -87,12 +87,61 @@ router.get('/', auth, async (req, res) => {
   res.json({ items, total, page: Number(page), pages: Math.ceil(total / Number(limit)) });
 });
 
+// router.get('/analytics/age', async (req, res) => {
+//   try {
+//     const { q, state, ageRange, page = 1, limit = 20 } = req.query
+//     const query = {}
+
+//     // 🔍 Text Search
+//     if (q) {
+//       query.$or = [
+//         { name: new RegExp(q, 'i') },
+//         { phoneNumber: new RegExp(q, 'i') },
+//         { aadhar: new RegExp(q, 'i') },
+//         { hospitalNo: new RegExp(q, 'i') },
+//       ]
+//     }
+
+//     // 🏙️ State Filter
+//     if (state) query.state = new RegExp(state, 'i')
+
+//     // 🧮 Age Range Filter
+//     if (ageRange) {
+//       const ranges = {
+//         '0-13': { $gte: 0, $lte: 13 },
+//         '14-20': { $gte: 14, $lte: 20 },
+//         '21-30': { $gte: 21, $lte: 30 },
+//         '31-40': { $gte: 31, $lte: 40 },
+//         '41-50': { $gte: 41, $lte: 50 },
+//         '51-60': { $gte: 51, $lte: 60 },
+//         '61-70': { $gte: 61, $lte: 70 },
+//         '70+': { $gte: 71 },
+//       }
+
+//       if (ranges[ageRange]) query.age = ranges[ageRange]
+//     }
+
+//     // 🧾 Pagination
+//     const skip = (Number(page) - 1) * Number(limit)
+//     const total = await Patient.countDocuments(query)
+//     const items = await Patient.find(query)
+//       .sort({ createdAt: -1 })
+//       .skip(skip)
+//       .limit(Number(limit))
+
+//     const pages = Math.ceil(total / Number(limit))
+
+//     res.json({ items, total, pages })
+//   } catch (err) {
+//     res.status(500).json({ message: err.message })
+//   }
+// })
+
 router.get('/analytics/age', async (req, res) => {
   try {
-    const { q, state, ageRange, page = 1, limit = 20 } = req.query
+    const { q, state, ageRange, startDate, endDate, page = 1, limit = 20 } = req.query
     const query = {}
 
-    // 🔍 Text Search
     if (q) {
       query.$or = [
         { name: new RegExp(q, 'i') },
@@ -102,10 +151,8 @@ router.get('/analytics/age', async (req, res) => {
       ]
     }
 
-    // 🏙️ State Filter
     if (state) query.state = new RegExp(state, 'i')
 
-    // 🧮 Age Range Filter
     if (ageRange) {
       const ranges = {
         '0-13': { $gte: 0, $lte: 13 },
@@ -117,11 +164,28 @@ router.get('/analytics/age', async (req, res) => {
         '61-70': { $gte: 61, $lte: 70 },
         '70+': { $gte: 71 },
       }
-
-      if (ranges[ageRange]) query.age = ranges[ageRange]
+      query.age = ranges[ageRange]
     }
 
-    // 🧾 Pagination
+    // ⏳ DATE RANGE FILTER
+    if (startDate && endDate) {
+      const start = new Date(startDate)
+      const end = new Date(endDate)
+      end.setHours(23, 59, 59)
+
+      query.createdAt = { $gte: start, $lte: end }
+    } else if (startDate) {
+      const start = new Date(startDate)
+      const end = new Date(startDate)
+      end.setHours(23, 59, 59)
+      query.createdAt = { $gte: start, $lte: end }
+    } else if (endDate) {
+      const start = new Date(endDate)
+      const end = new Date(endDate)
+      end.setHours(23, 59, 59)
+      query.createdAt = { $gte: start, $lte: end }
+    }
+
     const skip = (Number(page) - 1) * Number(limit)
     const total = await Patient.countDocuments(query)
     const items = await Patient.find(query)
@@ -129,13 +193,12 @@ router.get('/analytics/age', async (req, res) => {
       .skip(skip)
       .limit(Number(limit))
 
-    const pages = Math.ceil(total / Number(limit))
-
-    res.json({ items, total, pages })
+    res.json({ items, total, pages: Math.ceil(total / Number(limit)) })
   } catch (err) {
     res.status(500).json({ message: err.message })
   }
 })
+
 
 router.get('/analytics/list', async (req, res) => {
   try {

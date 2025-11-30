@@ -15,10 +15,12 @@ export default function PatientsAge() {
   const [editing, setEditing] = React.useState(null)
   const [form, setForm] = React.useState({})
 
+  const [startDate, setStartDate] = React.useState('')
+  const [endDate, setEndDate] = React.useState('')
   const load = () => {
     api
       .get('/patients/analytics/age', {
-        params: { q, state, ageRange, page, limit: 20 },
+        params: { q, state, ageRange, startDate, endDate, page, limit: 20 },
       })
       .then(({ data }) => {
         setItems(data.items)
@@ -27,7 +29,7 @@ export default function PatientsAge() {
       })
   }
 
-  React.useEffect(load, [q, state, ageRange, page])
+  React.useEffect(load, [q, state, ageRange, startDate, endDate, page])
 
   // ✅ Age Range Options
   const ageRanges = [
@@ -287,8 +289,8 @@ export default function PatientsAge() {
   // ...existing code...
   const saveEdit = async () => {
     // Fix: Use mandalamOther if mandalam is "OTHERS"
-      let mandalamValue = form.mandalam === "OTHERS" ? (form.mandalamOther || "OTHERS") : form.mandalam;
-      let stateValue = form.state === "OTHER STATE" ? (form.stateOther || "OTHER STATE") : form.state;
+    let mandalamValue = form.mandalam === "OTHERS" ? (form.mandalamOther || "OTHERS") : form.mandalam;
+    let stateValue = form.state === "OTHER STATE" ? (form.stateOther || "OTHER STATE") : form.state;
     try {
       await api.put(`/patients/${editing._id}`, {
         ...form,
@@ -343,6 +345,22 @@ export default function PatientsAge() {
             </option>
           ))}
         </select>
+
+        {/* ⏳ Start Date */}
+        <input
+          type="date"
+          className="filter-input"
+          value={startDate}
+          onChange={(e) => { setPage(1); setStartDate(e.target.value) }}
+        />
+
+        {/* ⏳ End Date */}
+        <input
+          type="date"
+          className="filter-input"
+          value={endDate}
+          onChange={(e) => { setPage(1); setEndDate(e.target.value) }}
+        />
       </div>
 
       {/* ✅ Existing Patients Table */}
